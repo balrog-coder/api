@@ -24,8 +24,10 @@ function api() {
 
 				container_id="$(docker ps --filter "name=API" --format "{{.ID}}")"
 				docker exec "${container_id}" bash -c "sed -i 's/value=\"Greybird\"/value=\"Greybird-dark\"/' \"/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml\""
-				docker exec "${container_id}" bash -c "sed -i 's/value=\"Greybird\"/value=\"Greybird-dark\"/' \"/config/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml\""
-			}
+				docker exec "${container_id}" bash -c "sed -i 's/value=\"Greybird\"/value=\"Greybird-dark\"/' \"/config/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml\"" 2>/dev/null
+				docker stop "${container_id}" 
+				docker start "${container_id}" 
+			}	
 		}
 
 		filebrowser() {
